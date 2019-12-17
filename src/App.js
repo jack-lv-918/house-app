@@ -1,25 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {HashRouter,Switch,Route,Redirect} from 'react-router-dom';
+import Loadable from 'react-loadable';
+// import Login from './pages/Login';
+// import Reg from './pages/Reg';
+import Main from './pages/main/Main';
+// import ErrorPage from './pages/ErrorPage';
+const Loading = ()=><div>加载中...</div>
+
+const Login = Loadable({
+  loader:()=>import(/*webpackChunkName:'login'*/'./pages/Login'),
+  loading:Loading
+});
+
+const Reg = Loadable({
+  loader:()=>import(/*webpackChunkName:'reg'*/'./pages/Reg'),
+  loading:Loading
+});
+
+const ErrorPage = Loadable({
+  loader:()=>import(/*webpackChunkName:'errorPage'*/'./pages/ErrorPage'),
+  loading:Loading
+});
+const Forgot = Loadable({
+  loader:()=>import(/*webpackChunkName:'forgot' */'./pages/Forgot'),
+  loading:Loading
+});
+
+
+
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HashRouter>
+     <Switch>
+       <Route path="/" exact component={Main}/>
+       <Route path="/login" component={Login}/>
+       <Route path="/reg" component={Reg}/>
+       <Route path="/forgot" component={Forgot}/>
+       <Redirect to="/"/>
+       {/* <Route component={ErrorPage}/> */}
+     </Switch>
+    </HashRouter>
   );
 }
 
