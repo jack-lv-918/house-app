@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Flex, Carousel, Grid } from 'antd-mobile';
 import { withRouter } from 'react-router-dom'
 import { guessYouLikeApi } from '../../apis/apis';
+import HouseListItem from '../../components/HouseListItem';
 
 
 
@@ -140,7 +141,20 @@ class Home extends Component {
     goToMap = () => {
         this.props.history.push('/mapPage')
     }
+    testCb = (parma)=>{
+        console.log(parma)
+    }
     render() {
+        /**
+         * store 数据仓库
+         * 
+         * action 通知对象  修改数据的唯一方式
+         * 
+         * reducer 计算者，决定修改数据的规则
+         * 
+         * mobx dva.js
+         * 
+         */
         console.log('this', this)
         const { list } = this.state;
         return (
@@ -187,17 +201,18 @@ class Home extends Component {
                 {
                     list.map((item) => {
                         return (
-                            <Flex key={item.id} style={{ backgroundColor: '#fff', marginBottom: 10 }}>
-                                <img style={{ width: 100, height: 100, marginRight: 10 }} src={item.pic} />
-                                <div style={{ flex: 1, paddingRight: 10 }}>
-                                    <div style={{ fontSize: 20, fontWeight: 'bold' }}>{item.name}</div>
-                                    <Flex justify="between" style={{ margin: '10px 0' }}>
-                                        <div>{item.address}</div>
-                                        <div style={{ color: 'red' }}>{item.price}/平米</div>
-                                    </Flex>
+                            <HouseListItem item={item} key={item.id} cb={this.testCb}/>
+                            // <Flex key={item.id} style={{ backgroundColor: '#fff', marginBottom: 10 }}>
+                            //     <img style={{ width: 100, height: 100, marginRight: 10 }} src={item.pic} />
+                            //     <div style={{ flex: 1, paddingRight: 10 }}>
+                            //         <div style={{ fontSize: 20, fontWeight: 'bold' }}>{item.name}</div>
+                            //         <Flex justify="between" style={{ margin: '10px 0' }}>
+                            //             <div>{item.address}</div>
+                            //             <div style={{ color: 'red' }}>{item.price}/平米</div>
+                            //         </Flex>
 
-                                </div>
-                            </Flex>
+                            //     </div>
+                            // </Flex>
                         )
                     })
                 }
