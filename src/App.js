@@ -26,6 +26,19 @@ const Forgot = Loadable({
   loading:Loading
 });
 
+const CityList = Loadable({
+  loader:()=>import(/*webpackChunkName:'cityList' */'./pages/CityList'),
+  loading:Loading,
+});
+const Search = Loadable({
+  loader:()=>import(/*webpackChunkName:'search' */'./pages/Search'),
+  loading:Loading,
+});
+const MapPage = Loadable({
+  loader:()=>import(/*webpackChunkName:'mapPage' */'./pages/MapPage'),
+  loading:Loading,
+});
+
 
 
 
@@ -39,6 +52,9 @@ function App() {
        <Route path="/login" component={Login}/>
        <Route path="/reg" component={Reg}/>
        <Route path="/forgot" component={Forgot}/>
+       <Route path="/cityList" component={CityList}/>
+       <Route path="/search" component={Search}/>
+       <Route path="/mapPage" component={MapPage}/>
        <Redirect to="/"/>
        {/* <Route component={ErrorPage}/> */}
      </Switch>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Flex, List, InputItem, WhiteSpace, WingBlank, Button } from 'antd-mobile'
-import axios from 'axios';
+import {loginApi} from '../apis/apis';
 
 export default class Login extends Component {
     state = {
@@ -13,14 +13,30 @@ export default class Login extends Component {
         this.setState({phone:val});
     }
     pwdChange = (val)=>{
-        this.setState({pwd:val});
+        this.setState({pwd:val});   
     }
     login = ()=>{
         //获取表单值，并提交后台
         const {phone,pwd} = this.state;
+        loginApi({password:pwd,phoneNum:phone})
+        .then((res)=>{
+            console.log('res',res)
+            const {token,data} = res;
+            if(token){
+                localStorage.setItem('token',token);
+                localStorage.setItem('phone',data.phoneNum);
+                this.props.history.replace('/')
+            }else{
+                console.log('登录失败')
+            }
+        })
+        .catch((e)=>{
+            console.log('e',e)
+        })
        
     }
     render() {
+        console.log(this)
         const { phone, pwd } = this.state;
         return (
             <div style={{ background: '#fff', position: 'fixed', top: 0, bottom: 0, left: 0, right: 0 }}>
