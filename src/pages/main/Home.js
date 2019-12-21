@@ -4,6 +4,10 @@ import { withRouter } from 'react-router-dom'
 import { guessYouLikeApi } from '../../apis/apis';
 import HouseListItem from '../../components/HouseListItem';
 
+//redux
+import {connect} from 'react-redux';
+import {addHistory} from '../../store';
+
 
 
 // const data = Array.from(new Array(9)).map((_val, i) => ({
@@ -141,8 +145,11 @@ class Home extends Component {
     goToMap = () => {
         this.props.history.push('/mapPage')
     }
-    testCb = (parma)=>{
-        console.log(parma)
+ //添加或修改历史记录
+    addHistory = (item)=>{
+        alert('我看了哦');
+        console.log('item',item)
+        this.props.dispatch(addHistory(item));
     }
     render() {
         /**
@@ -155,7 +162,7 @@ class Home extends Component {
          * mobx dva.js
          * 
          */
-        console.log('this', this)
+        console.log('this-Home', this)
         const { list } = this.state;
         return (
             <div>
@@ -201,7 +208,7 @@ class Home extends Component {
                 {
                     list.map((item) => {
                         return (
-                            <HouseListItem item={item} key={item.id} cb={this.testCb}/>
+                            <HouseListItem onClick={this.addHistory}   item={item} key={item.id}/>
                             // <Flex key={item.id} style={{ backgroundColor: '#fff', marginBottom: 10 }}>
                             //     <img style={{ width: 100, height: 100, marginRight: 10 }} src={item.pic} />
                             //     <div style={{ flex: 1, paddingRight: 10 }}>
@@ -224,4 +231,4 @@ class Home extends Component {
 // function test(InnerComp){
 //     return <Home history={{push:()=>{}}}/>
 // }
-export default withRouter(Home);
+export default connect()(withRouter(Home));
